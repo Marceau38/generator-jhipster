@@ -46,6 +46,8 @@
     <%_ } _%>
     <br/>
     <div class="table-responsive" *ngIf="<%=entityInstancePlural %>">
+        <mat-grid-list>
+            <mat-grid-tile *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %> ;trackBy: trackId">
         <table class="table table-striped">
             <thead>
             <tr<% if (pagination !== 'no') { %> jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="<%=pagination !== 'infinite-scroll' ? 'transition.bind(this)' : 'reset.bind(this)'%>"<% } %>>
@@ -65,7 +67,7 @@
             </tr>
             </thead>
             <tbody<% if (pagination === 'infinite-scroll') { %> infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0"<% } %>>
-            <tr *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %> ;trackBy: trackId">
+            <tr>
                 <td><a [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id, 'view' ]">{{<%=entityInstance %>.id}}</a></td>
                 <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
@@ -166,6 +168,9 @@
             </tr>
             </tbody>
         </table>
+    </mat-grid-tile>
+</mat-grid-list>
+
     </div>
 <%_ if (databaseType !== 'cassandra') { _%>
     <%_ if (pagination === 'pager') { _%>
