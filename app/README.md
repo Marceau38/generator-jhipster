@@ -19,7 +19,7 @@ We use npm scripts and [Webpack][] as our build system.
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
 
-    ./mvnw
+    ./gradlew
     npm start
 
 Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
@@ -93,12 +93,12 @@ will generate few files:
 
 To build the final jar and optimize the app application for production, run:
 
-    ./mvnw -Pprod clean package
+    ./gradlew -Pprod clean bootJar
 
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
 To ensure everything worked, run:
 
-    java -jar target/*.jar
+    java -jar build/libs/*.jar
 
 Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
@@ -108,13 +108,13 @@ Refer to [Using JHipster in production][] for more details.
 
 To package your application as a war in order to deploy it to an application server, run:
 
-    ./mvnw -Pprod,war clean package
+    ./gradlew -Pprod clean bootWar
 
 ## Testing
 
 To launch your application's tests, run:
 
-    ./mvnw clean test
+    ./gradlew test
 
 ### Client tests
 
@@ -138,7 +138,7 @@ In this case you must install it before.
 Then, run a Sonar analysis:
 
 ```
-./mvnw -Pprod clean verify sonar:sonar
+./gradlew -Pprod clean check sonarqube
 ```
 
 or
@@ -164,7 +164,7 @@ To stop it and remove the container, run:
 You can also fully dockerize your application and all the services that it depends on.
 To achieve this, first build a docker image of your app by running:
 
-    ./mvnw package -Pprod verify jib:dockerBuild
+    ./gradlew bootJar -Pprod jibDockerBuild
 
 Then run:
 

@@ -17,7 +17,7 @@ const ENV = 'development';
 module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
     devtool: 'eval-source-map',
     devServer: {
-        contentBase: './target/classes/static/',
+        contentBase: './build/resources/main/static/',
         proxy: [{
             context: [
                 '/'
@@ -37,7 +37,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         main: './src/main/webapp/app/app.main'
     },
     output: {
-        path: utils.root('target/classes/static/'),
+        path: utils.root('build/resources/main/static/'),
         filename: 'app/[name].bundle.js',
         chunkFilename: 'app/[id].chunk.js'
     },
@@ -55,7 +55,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
                 {
                     loader: 'cache-loader',
                     options: {
-                      cacheDirectory: path.resolve('target/cache-loader')
+                      cacheDirectory: path.resolve('build/cache-loader')
                     }
                 },
                 {
